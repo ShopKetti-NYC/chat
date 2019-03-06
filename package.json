@@ -1,0 +1,22 @@
+{
+  "name": "shopkett-chat-backend",
+  "version": "0.0.1",
+  "description": "ShopKetti Chat Backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "get-schema": "graphql get-schema -p shopketti-chat-app"
+  },
+  "author": "hadongz",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "graphql-yoga": "^1.17.4",
+    "jsonwebtoken": "^8.5.0",
+    "prisma-binding": "^2.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}

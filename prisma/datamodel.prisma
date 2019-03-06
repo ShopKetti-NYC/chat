@@ -1,0 +1,33 @@
+type User {
+  id: ID! @unique
+  email: String! @unique
+  name: String!
+  password: String!
+  owner_of: Company @relation(name: "OwnerOfCompany")
+  employee_of: Company @relation(name: "EmployeeOfCompany")
+  chatroom: ChatRoom @relation(name: "UserToChatRoom")
+}
+
+type Company {
+  id: ID! @unique
+  name: String!
+  owner: User! @relation(name: "OwnerOfCompany")
+  description: String!
+  logo: String!
+  employees: [User!]! @relation(name: "EmployeeOfCompany")
+  chatroom: ChatRoom @relation(name: "CompanyToChatroom")
+}
+
+type ChatRoom {
+  id: ID! @unique
+  company: Company! @relation(name: "CompanyToChatroom")
+  messages: [Message!]! @relation(name: "MessageToChatRoom")
+  participants: [User!]! @relation(name: "UserToChatRoom")
+}
+
+type Message {
+  id: ID! @unique
+  text: String!
+  chatroom: ChatRoom! @relation(name: "MessageToChatRoom")
+  from: User!
+}

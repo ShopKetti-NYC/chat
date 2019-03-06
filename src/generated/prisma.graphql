@@ -1,0 +1,1695 @@
+# source: https://shopketti-dev-ffe6bbb79d.herokuapp.com/
+# timestamp: Mon Mar 04 2019 02:07:49 GMT-0800 (Pacific Standard Time)
+
+type AggregateChatRoom {
+  count: Int!
+}
+
+type AggregateCompany {
+  count: Int!
+}
+
+type AggregateMessage {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type ChatRoom implements Node {
+  id: ID!
+  company: Company!
+  messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
+  participants(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+}
+
+"""A connection to a list of items."""
+type ChatRoomConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ChatRoomEdge]!
+  aggregate: AggregateChatRoom!
+}
+
+input ChatRoomCreateInput {
+  company: CompanyCreateOneWithoutChatroomInput!
+  messages: MessageCreateManyWithoutChatroomInput
+  participants: UserCreateManyWithoutChatroomInput
+}
+
+input ChatRoomCreateOneWithoutCompanyInput {
+  create: ChatRoomCreateWithoutCompanyInput
+  connect: ChatRoomWhereUniqueInput
+}
+
+input ChatRoomCreateOneWithoutMessagesInput {
+  create: ChatRoomCreateWithoutMessagesInput
+  connect: ChatRoomWhereUniqueInput
+}
+
+input ChatRoomCreateOneWithoutParticipantsInput {
+  create: ChatRoomCreateWithoutParticipantsInput
+  connect: ChatRoomWhereUniqueInput
+}
+
+input ChatRoomCreateWithoutCompanyInput {
+  messages: MessageCreateManyWithoutChatroomInput
+  participants: UserCreateManyWithoutChatroomInput
+}
+
+input ChatRoomCreateWithoutMessagesInput {
+  company: CompanyCreateOneWithoutChatroomInput!
+  participants: UserCreateManyWithoutChatroomInput
+}
+
+input ChatRoomCreateWithoutParticipantsInput {
+  company: CompanyCreateOneWithoutChatroomInput!
+  messages: MessageCreateManyWithoutChatroomInput
+}
+
+"""An edge in a connection."""
+type ChatRoomEdge {
+  """The item at the end of the edge."""
+  node: ChatRoom!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ChatRoomOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ChatRoomPreviousValues {
+  id: ID!
+}
+
+type ChatRoomSubscriptionPayload {
+  mutation: MutationType!
+  node: ChatRoom
+  updatedFields: [String!]
+  previousValues: ChatRoomPreviousValues
+}
+
+input ChatRoomSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ChatRoomSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ChatRoomSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ChatRoomSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ChatRoomWhereInput
+}
+
+input ChatRoomUpdateInput {
+  company: CompanyUpdateOneRequiredWithoutChatroomInput
+  messages: MessageUpdateManyWithoutChatroomInput
+  participants: UserUpdateManyWithoutChatroomInput
+}
+
+input ChatRoomUpdateOneRequiredWithoutMessagesInput {
+  create: ChatRoomCreateWithoutMessagesInput
+  connect: ChatRoomWhereUniqueInput
+  update: ChatRoomUpdateWithoutMessagesDataInput
+  upsert: ChatRoomUpsertWithoutMessagesInput
+}
+
+input ChatRoomUpdateOneWithoutCompanyInput {
+  create: ChatRoomCreateWithoutCompanyInput
+  connect: ChatRoomWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: ChatRoomUpdateWithoutCompanyDataInput
+  upsert: ChatRoomUpsertWithoutCompanyInput
+}
+
+input ChatRoomUpdateOneWithoutParticipantsInput {
+  create: ChatRoomCreateWithoutParticipantsInput
+  connect: ChatRoomWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: ChatRoomUpdateWithoutParticipantsDataInput
+  upsert: ChatRoomUpsertWithoutParticipantsInput
+}
+
+input ChatRoomUpdateWithoutCompanyDataInput {
+  messages: MessageUpdateManyWithoutChatroomInput
+  participants: UserUpdateManyWithoutChatroomInput
+}
+
+input ChatRoomUpdateWithoutMessagesDataInput {
+  company: CompanyUpdateOneRequiredWithoutChatroomInput
+  participants: UserUpdateManyWithoutChatroomInput
+}
+
+input ChatRoomUpdateWithoutParticipantsDataInput {
+  company: CompanyUpdateOneRequiredWithoutChatroomInput
+  messages: MessageUpdateManyWithoutChatroomInput
+}
+
+input ChatRoomUpsertWithoutCompanyInput {
+  update: ChatRoomUpdateWithoutCompanyDataInput!
+  create: ChatRoomCreateWithoutCompanyInput!
+}
+
+input ChatRoomUpsertWithoutMessagesInput {
+  update: ChatRoomUpdateWithoutMessagesDataInput!
+  create: ChatRoomCreateWithoutMessagesInput!
+}
+
+input ChatRoomUpsertWithoutParticipantsInput {
+  update: ChatRoomUpdateWithoutParticipantsDataInput!
+  create: ChatRoomCreateWithoutParticipantsInput!
+}
+
+input ChatRoomWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ChatRoomWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ChatRoomWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ChatRoomWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  company: CompanyWhereInput
+  messages_every: MessageWhereInput
+  messages_some: MessageWhereInput
+  messages_none: MessageWhereInput
+  participants_every: UserWhereInput
+  participants_some: UserWhereInput
+  participants_none: UserWhereInput
+}
+
+input ChatRoomWhereUniqueInput {
+  id: ID
+}
+
+type Company implements Node {
+  id: ID!
+  name: String!
+  owner: User!
+  description: String!
+  logo: String!
+  employees(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  chatroom: ChatRoom
+}
+
+"""A connection to a list of items."""
+type CompanyConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CompanyEdge]!
+  aggregate: AggregateCompany!
+}
+
+input CompanyCreateInput {
+  name: String!
+  description: String!
+  logo: String!
+  owner: UserCreateOneWithoutOwner_ofInput!
+  employees: UserCreateManyWithoutEmployee_ofInput
+  chatroom: ChatRoomCreateOneWithoutCompanyInput
+}
+
+input CompanyCreateOneWithoutChatroomInput {
+  create: CompanyCreateWithoutChatroomInput
+  connect: CompanyWhereUniqueInput
+}
+
+input CompanyCreateOneWithoutEmployeesInput {
+  create: CompanyCreateWithoutEmployeesInput
+  connect: CompanyWhereUniqueInput
+}
+
+input CompanyCreateOneWithoutOwnerInput {
+  create: CompanyCreateWithoutOwnerInput
+  connect: CompanyWhereUniqueInput
+}
+
+input CompanyCreateWithoutChatroomInput {
+  name: String!
+  description: String!
+  logo: String!
+  owner: UserCreateOneWithoutOwner_ofInput!
+  employees: UserCreateManyWithoutEmployee_ofInput
+}
+
+input CompanyCreateWithoutEmployeesInput {
+  name: String!
+  description: String!
+  logo: String!
+  owner: UserCreateOneWithoutOwner_ofInput!
+  chatroom: ChatRoomCreateOneWithoutCompanyInput
+}
+
+input CompanyCreateWithoutOwnerInput {
+  name: String!
+  description: String!
+  logo: String!
+  employees: UserCreateManyWithoutEmployee_ofInput
+  chatroom: ChatRoomCreateOneWithoutCompanyInput
+}
+
+"""An edge in a connection."""
+type CompanyEdge {
+  """The item at the end of the edge."""
+  node: Company!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CompanyOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  description_ASC
+  description_DESC
+  logo_ASC
+  logo_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CompanyPreviousValues {
+  id: ID!
+  name: String!
+  description: String!
+  logo: String!
+}
+
+type CompanySubscriptionPayload {
+  mutation: MutationType!
+  node: Company
+  updatedFields: [String!]
+  previousValues: CompanyPreviousValues
+}
+
+input CompanySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CompanySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CompanySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompanySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CompanyWhereInput
+}
+
+input CompanyUpdateInput {
+  name: String
+  description: String
+  logo: String
+  owner: UserUpdateOneRequiredWithoutOwner_ofInput
+  employees: UserUpdateManyWithoutEmployee_ofInput
+  chatroom: ChatRoomUpdateOneWithoutCompanyInput
+}
+
+input CompanyUpdateManyMutationInput {
+  name: String
+  description: String
+  logo: String
+}
+
+input CompanyUpdateOneRequiredWithoutChatroomInput {
+  create: CompanyCreateWithoutChatroomInput
+  connect: CompanyWhereUniqueInput
+  update: CompanyUpdateWithoutChatroomDataInput
+  upsert: CompanyUpsertWithoutChatroomInput
+}
+
+input CompanyUpdateOneWithoutEmployeesInput {
+  create: CompanyCreateWithoutEmployeesInput
+  connect: CompanyWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: CompanyUpdateWithoutEmployeesDataInput
+  upsert: CompanyUpsertWithoutEmployeesInput
+}
+
+input CompanyUpdateOneWithoutOwnerInput {
+  create: CompanyCreateWithoutOwnerInput
+  connect: CompanyWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: CompanyUpdateWithoutOwnerDataInput
+  upsert: CompanyUpsertWithoutOwnerInput
+}
+
+input CompanyUpdateWithoutChatroomDataInput {
+  name: String
+  description: String
+  logo: String
+  owner: UserUpdateOneRequiredWithoutOwner_ofInput
+  employees: UserUpdateManyWithoutEmployee_ofInput
+}
+
+input CompanyUpdateWithoutEmployeesDataInput {
+  name: String
+  description: String
+  logo: String
+  owner: UserUpdateOneRequiredWithoutOwner_ofInput
+  chatroom: ChatRoomUpdateOneWithoutCompanyInput
+}
+
+input CompanyUpdateWithoutOwnerDataInput {
+  name: String
+  description: String
+  logo: String
+  employees: UserUpdateManyWithoutEmployee_ofInput
+  chatroom: ChatRoomUpdateOneWithoutCompanyInput
+}
+
+input CompanyUpsertWithoutChatroomInput {
+  update: CompanyUpdateWithoutChatroomDataInput!
+  create: CompanyCreateWithoutChatroomInput!
+}
+
+input CompanyUpsertWithoutEmployeesInput {
+  update: CompanyUpdateWithoutEmployeesDataInput!
+  create: CompanyCreateWithoutEmployeesInput!
+}
+
+input CompanyUpsertWithoutOwnerInput {
+  update: CompanyUpdateWithoutOwnerDataInput!
+  create: CompanyCreateWithoutOwnerInput!
+}
+
+input CompanyWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CompanyWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CompanyWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CompanyWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  description: String
+
+  """All values that are not equal to given value."""
+  description_not: String
+
+  """All values that are contained in given list."""
+  description_in: [String!]
+
+  """All values that are not contained in given list."""
+  description_not_in: [String!]
+
+  """All values less than the given value."""
+  description_lt: String
+
+  """All values less than or equal the given value."""
+  description_lte: String
+
+  """All values greater than the given value."""
+  description_gt: String
+
+  """All values greater than or equal the given value."""
+  description_gte: String
+
+  """All values containing the given string."""
+  description_contains: String
+
+  """All values not containing the given string."""
+  description_not_contains: String
+
+  """All values starting with the given string."""
+  description_starts_with: String
+
+  """All values not starting with the given string."""
+  description_not_starts_with: String
+
+  """All values ending with the given string."""
+  description_ends_with: String
+
+  """All values not ending with the given string."""
+  description_not_ends_with: String
+  logo: String
+
+  """All values that are not equal to given value."""
+  logo_not: String
+
+  """All values that are contained in given list."""
+  logo_in: [String!]
+
+  """All values that are not contained in given list."""
+  logo_not_in: [String!]
+
+  """All values less than the given value."""
+  logo_lt: String
+
+  """All values less than or equal the given value."""
+  logo_lte: String
+
+  """All values greater than the given value."""
+  logo_gt: String
+
+  """All values greater than or equal the given value."""
+  logo_gte: String
+
+  """All values containing the given string."""
+  logo_contains: String
+
+  """All values not containing the given string."""
+  logo_not_contains: String
+
+  """All values starting with the given string."""
+  logo_starts_with: String
+
+  """All values not starting with the given string."""
+  logo_not_starts_with: String
+
+  """All values ending with the given string."""
+  logo_ends_with: String
+
+  """All values not ending with the given string."""
+  logo_not_ends_with: String
+  owner: UserWhereInput
+  employees_every: UserWhereInput
+  employees_some: UserWhereInput
+  employees_none: UserWhereInput
+  chatroom: ChatRoomWhereInput
+}
+
+input CompanyWhereUniqueInput {
+  id: ID
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Message implements Node {
+  id: ID!
+  text: String!
+  chatroom: ChatRoom!
+  from: User!
+}
+
+"""A connection to a list of items."""
+type MessageConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MessageEdge]!
+  aggregate: AggregateMessage!
+}
+
+input MessageCreateInput {
+  text: String!
+  chatroom: ChatRoomCreateOneWithoutMessagesInput!
+  from: UserCreateOneInput!
+}
+
+input MessageCreateManyWithoutChatroomInput {
+  create: [MessageCreateWithoutChatroomInput!]
+  connect: [MessageWhereUniqueInput!]
+}
+
+input MessageCreateWithoutChatroomInput {
+  text: String!
+  from: UserCreateOneInput!
+}
+
+"""An edge in a connection."""
+type MessageEdge {
+  """The item at the end of the edge."""
+  node: Message!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum MessageOrderByInput {
+  id_ASC
+  id_DESC
+  text_ASC
+  text_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type MessagePreviousValues {
+  id: ID!
+  text: String!
+}
+
+input MessageScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MessageScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MessageScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MessageScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  text: String
+
+  """All values that are not equal to given value."""
+  text_not: String
+
+  """All values that are contained in given list."""
+  text_in: [String!]
+
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
+
+  """All values less than the given value."""
+  text_lt: String
+
+  """All values less than or equal the given value."""
+  text_lte: String
+
+  """All values greater than the given value."""
+  text_gt: String
+
+  """All values greater than or equal the given value."""
+  text_gte: String
+
+  """All values containing the given string."""
+  text_contains: String
+
+  """All values not containing the given string."""
+  text_not_contains: String
+
+  """All values starting with the given string."""
+  text_starts_with: String
+
+  """All values not starting with the given string."""
+  text_not_starts_with: String
+
+  """All values ending with the given string."""
+  text_ends_with: String
+
+  """All values not ending with the given string."""
+  text_not_ends_with: String
+}
+
+type MessageSubscriptionPayload {
+  mutation: MutationType!
+  node: Message
+  updatedFields: [String!]
+  previousValues: MessagePreviousValues
+}
+
+input MessageSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MessageSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MessageSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MessageSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: MessageWhereInput
+}
+
+input MessageUpdateInput {
+  text: String
+  chatroom: ChatRoomUpdateOneRequiredWithoutMessagesInput
+  from: UserUpdateOneRequiredInput
+}
+
+input MessageUpdateManyDataInput {
+  text: String
+}
+
+input MessageUpdateManyMutationInput {
+  text: String
+}
+
+input MessageUpdateManyWithoutChatroomInput {
+  create: [MessageCreateWithoutChatroomInput!]
+  connect: [MessageWhereUniqueInput!]
+  disconnect: [MessageWhereUniqueInput!]
+  delete: [MessageWhereUniqueInput!]
+  update: [MessageUpdateWithWhereUniqueWithoutChatroomInput!]
+  updateMany: [MessageUpdateManyWithWhereNestedInput!]
+  deleteMany: [MessageScalarWhereInput!]
+  upsert: [MessageUpsertWithWhereUniqueWithoutChatroomInput!]
+}
+
+input MessageUpdateManyWithWhereNestedInput {
+  where: MessageScalarWhereInput!
+  data: MessageUpdateManyDataInput!
+}
+
+input MessageUpdateWithoutChatroomDataInput {
+  text: String
+  from: UserUpdateOneRequiredInput
+}
+
+input MessageUpdateWithWhereUniqueWithoutChatroomInput {
+  where: MessageWhereUniqueInput!
+  data: MessageUpdateWithoutChatroomDataInput!
+}
+
+input MessageUpsertWithWhereUniqueWithoutChatroomInput {
+  where: MessageWhereUniqueInput!
+  update: MessageUpdateWithoutChatroomDataInput!
+  create: MessageCreateWithoutChatroomInput!
+}
+
+input MessageWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MessageWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MessageWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MessageWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  text: String
+
+  """All values that are not equal to given value."""
+  text_not: String
+
+  """All values that are contained in given list."""
+  text_in: [String!]
+
+  """All values that are not contained in given list."""
+  text_not_in: [String!]
+
+  """All values less than the given value."""
+  text_lt: String
+
+  """All values less than or equal the given value."""
+  text_lte: String
+
+  """All values greater than the given value."""
+  text_gt: String
+
+  """All values greater than or equal the given value."""
+  text_gte: String
+
+  """All values containing the given string."""
+  text_contains: String
+
+  """All values not containing the given string."""
+  text_not_contains: String
+
+  """All values starting with the given string."""
+  text_starts_with: String
+
+  """All values not starting with the given string."""
+  text_not_starts_with: String
+
+  """All values ending with the given string."""
+  text_ends_with: String
+
+  """All values not ending with the given string."""
+  text_not_ends_with: String
+  chatroom: ChatRoomWhereInput
+  from: UserWhereInput
+}
+
+input MessageWhereUniqueInput {
+  id: ID
+}
+
+type Mutation {
+  createCompany(data: CompanyCreateInput!): Company!
+  createChatRoom(data: ChatRoomCreateInput!): ChatRoom!
+  createMessage(data: MessageCreateInput!): Message!
+  createUser(data: UserCreateInput!): User!
+  updateCompany(data: CompanyUpdateInput!, where: CompanyWhereUniqueInput!): Company
+  updateChatRoom(data: ChatRoomUpdateInput!, where: ChatRoomWhereUniqueInput!): ChatRoom
+  updateMessage(data: MessageUpdateInput!, where: MessageWhereUniqueInput!): Message
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteCompany(where: CompanyWhereUniqueInput!): Company
+  deleteChatRoom(where: ChatRoomWhereUniqueInput!): ChatRoom
+  deleteMessage(where: MessageWhereUniqueInput!): Message
+  deleteUser(where: UserWhereUniqueInput!): User
+  upsertCompany(where: CompanyWhereUniqueInput!, create: CompanyCreateInput!, update: CompanyUpdateInput!): Company!
+  upsertChatRoom(where: ChatRoomWhereUniqueInput!, create: ChatRoomCreateInput!, update: ChatRoomUpdateInput!): ChatRoom!
+  upsertMessage(where: MessageWhereUniqueInput!, create: MessageCreateInput!, update: MessageUpdateInput!): Message!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyCompanies(data: CompanyUpdateManyMutationInput!, where: CompanyWhereInput): BatchPayload!
+  updateManyMessages(data: MessageUpdateManyMutationInput!, where: MessageWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
+  deleteManyChatRooms(where: ChatRoomWhereInput): BatchPayload!
+  deleteManyMessages(where: MessageWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  companies(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Company]!
+  chatRooms(where: ChatRoomWhereInput, orderBy: ChatRoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ChatRoom]!
+  messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  company(where: CompanyWhereUniqueInput!): Company
+  chatRoom(where: ChatRoomWhereUniqueInput!): ChatRoom
+  message(where: MessageWhereUniqueInput!): Message
+  user(where: UserWhereUniqueInput!): User
+  companiesConnection(where: CompanyWhereInput, orderBy: CompanyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CompanyConnection!
+  chatRoomsConnection(where: ChatRoomWhereInput, orderBy: ChatRoomOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ChatRoomConnection!
+  messagesConnection(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MessageConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Subscription {
+  company(where: CompanySubscriptionWhereInput): CompanySubscriptionPayload
+  chatRoom(where: ChatRoomSubscriptionWhereInput): ChatRoomSubscriptionPayload
+  message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type User implements Node {
+  id: ID!
+  email: String!
+  name: String!
+  password: String!
+  owner_of: Company
+  employee_of: Company
+  chatroom: ChatRoom
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  email: String!
+  name: String!
+  password: String!
+  owner_of: CompanyCreateOneWithoutOwnerInput
+  employee_of: CompanyCreateOneWithoutEmployeesInput
+  chatroom: ChatRoomCreateOneWithoutParticipantsInput
+}
+
+input UserCreateManyWithoutChatroomInput {
+  create: [UserCreateWithoutChatroomInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateManyWithoutEmployee_ofInput {
+  create: [UserCreateWithoutEmployee_ofInput!]
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutOwner_ofInput {
+  create: UserCreateWithoutOwner_ofInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutChatroomInput {
+  email: String!
+  name: String!
+  password: String!
+  owner_of: CompanyCreateOneWithoutOwnerInput
+  employee_of: CompanyCreateOneWithoutEmployeesInput
+}
+
+input UserCreateWithoutEmployee_ofInput {
+  email: String!
+  name: String!
+  password: String!
+  owner_of: CompanyCreateOneWithoutOwnerInput
+  chatroom: ChatRoomCreateOneWithoutParticipantsInput
+}
+
+input UserCreateWithoutOwner_ofInput {
+  email: String!
+  name: String!
+  password: String!
+  employee_of: CompanyCreateOneWithoutEmployeesInput
+  chatroom: ChatRoomCreateOneWithoutParticipantsInput
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  email_ASC
+  email_DESC
+  name_ASC
+  name_DESC
+  password_ASC
+  password_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  email: String!
+  name: String!
+  password: String!
+}
+
+input UserScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+}
+
+input UserUpdateDataInput {
+  email: String
+  name: String
+  password: String
+  owner_of: CompanyUpdateOneWithoutOwnerInput
+  employee_of: CompanyUpdateOneWithoutEmployeesInput
+  chatroom: ChatRoomUpdateOneWithoutParticipantsInput
+}
+
+input UserUpdateInput {
+  email: String
+  name: String
+  password: String
+  owner_of: CompanyUpdateOneWithoutOwnerInput
+  employee_of: CompanyUpdateOneWithoutEmployeesInput
+  chatroom: ChatRoomUpdateOneWithoutParticipantsInput
+}
+
+input UserUpdateManyDataInput {
+  email: String
+  name: String
+  password: String
+}
+
+input UserUpdateManyMutationInput {
+  email: String
+  name: String
+  password: String
+}
+
+input UserUpdateManyWithoutChatroomInput {
+  create: [UserCreateWithoutChatroomInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutChatroomInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+  deleteMany: [UserScalarWhereInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutChatroomInput!]
+}
+
+input UserUpdateManyWithoutEmployee_ofInput {
+  create: [UserCreateWithoutEmployee_ofInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueWithoutEmployee_ofInput!]
+  updateMany: [UserUpdateManyWithWhereNestedInput!]
+  deleteMany: [UserScalarWhereInput!]
+  upsert: [UserUpsertWithWhereUniqueWithoutEmployee_ofInput!]
+}
+
+input UserUpdateManyWithWhereNestedInput {
+  where: UserScalarWhereInput!
+  data: UserUpdateManyDataInput!
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
+input UserUpdateOneRequiredWithoutOwner_ofInput {
+  create: UserCreateWithoutOwner_ofInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutOwner_ofDataInput
+  upsert: UserUpsertWithoutOwner_ofInput
+}
+
+input UserUpdateWithoutChatroomDataInput {
+  email: String
+  name: String
+  password: String
+  owner_of: CompanyUpdateOneWithoutOwnerInput
+  employee_of: CompanyUpdateOneWithoutEmployeesInput
+}
+
+input UserUpdateWithoutEmployee_ofDataInput {
+  email: String
+  name: String
+  password: String
+  owner_of: CompanyUpdateOneWithoutOwnerInput
+  chatroom: ChatRoomUpdateOneWithoutParticipantsInput
+}
+
+input UserUpdateWithoutOwner_ofDataInput {
+  email: String
+  name: String
+  password: String
+  employee_of: CompanyUpdateOneWithoutEmployeesInput
+  chatroom: ChatRoomUpdateOneWithoutParticipantsInput
+}
+
+input UserUpdateWithWhereUniqueWithoutChatroomInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutChatroomDataInput!
+}
+
+input UserUpdateWithWhereUniqueWithoutEmployee_ofInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateWithoutEmployee_ofDataInput!
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserUpsertWithoutOwner_ofInput {
+  update: UserUpdateWithoutOwner_ofDataInput!
+  create: UserCreateWithoutOwner_ofInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutChatroomInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutChatroomDataInput!
+  create: UserCreateWithoutChatroomInput!
+}
+
+input UserUpsertWithWhereUniqueWithoutEmployee_ofInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateWithoutEmployee_ofDataInput!
+  create: UserCreateWithoutEmployee_ofInput!
+}
+
+input UserWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  owner_of: CompanyWhereInput
+  employee_of: CompanyWhereInput
+  chatroom: ChatRoomWhereInput
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  email: String
+}
