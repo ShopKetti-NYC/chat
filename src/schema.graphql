@@ -2,37 +2,26 @@
 # import Company from './generated/prisma.graphql'
 # import ChatRoom from './generated/prisma.graphql'
 # import Message from './generated/prisma.graphql'
+# import MessageSubscriptionPayload from './generated/prisma.graphql'
 
 type Query {
   users: [User!]!
   companies: [Company!]!
+  chatRooms: [ChatRoom!]!
+  chatRoom(companyId: ID!): ChatRoom!
 }
 
 type Mutation {
-  login(data: InputLoginData): AuthPayload!
-  register(data: InputRegisterData): AuthPayload!
-  createCompany(data: InputCreateCompany): Company!
+  login(email: String!, password: String!): AuthPayload!
+  register(email: String!, name: String!, password: String!): AuthPayload!
+  createCompany(name: String!, description: String!, logo: String!): Company!
   joinCompany(companyId: ID!): Company!
-  createChatRoom(companyId: ID!): ChatRoom!
   joinChatRoom(chatroomId: ID!): ChatRoom!
   createMessage(chatroomId: ID!, text: String!): Message!
 }
 
-input InputCreateCompany {
-  name: String!
-  description: String!
-  logo: String!
-}
-
-input InputLoginData {
-  email: String!
-  password: String!
-}
-
-input InputRegisterData {
-  email: String!
-  name: String!
-  password: String!
+type Subscription {
+  message(chatroomId: ID!): MessageSubscriptionPayload
 }
 
 type AuthPayload {

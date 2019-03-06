@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "shopketti-chat-app": {
+      "schemaPath": "src/generated/prisma.graphql",
+      "extensions": {
+        "endpoints": {
+          "default": "https://shopketti-dev-ffe6bbb79d.herokuapp.com/"
+        }
+      }
+    }
+  }
+}

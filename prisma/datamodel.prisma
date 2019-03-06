@@ -3,6 +3,7 @@ type User {
   email: String! @unique
   name: String!
   password: String!
+  language: String! @default(value: "English")
   owner_of: Company @relation(name: "OwnerOfCompany")
   employee_of: Company @relation(name: "EmployeeOfCompany")
   chatroom: ChatRoom @relation(name: "UserToChatRoom")
@@ -20,6 +21,7 @@ type Company {
 
 type ChatRoom {
   id: ID! @unique
+  private: Boolean! @default(value: false)
   company: Company! @relation(name: "CompanyToChatroom")
   messages: [Message!]! @relation(name: "MessageToChatRoom")
   participants: [User!]! @relation(name: "UserToChatRoom")

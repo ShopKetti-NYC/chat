@@ -1,5 +1,5 @@
 # source: https://shopketti-dev-ffe6bbb79d.herokuapp.com/
-# timestamp: Mon Mar 04 2019 02:07:49 GMT-0800 (Pacific Standard Time)
+# timestamp: Tue Mar 05 2019 22:36:03 GMT-0800 (Pacific Standard Time)
 
 type AggregateChatRoom {
   count: Int!
@@ -24,7 +24,8 @@ type BatchPayload {
 
 type ChatRoom implements Node {
   id: ID!
-  company: Company!
+  private: Boolean!
+  company: Company
   messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
   participants(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
 }
@@ -40,7 +41,8 @@ type ChatRoomConnection {
 }
 
 input ChatRoomCreateInput {
-  company: CompanyCreateOneWithoutChatroomInput!
+  private: Boolean!
+  company: CompanyCreateOneWithoutChatroomInput
   messages: MessageCreateManyWithoutChatroomInput
   participants: UserCreateManyWithoutChatroomInput
 }
@@ -61,17 +63,20 @@ input ChatRoomCreateOneWithoutParticipantsInput {
 }
 
 input ChatRoomCreateWithoutCompanyInput {
+  private: Boolean!
   messages: MessageCreateManyWithoutChatroomInput
   participants: UserCreateManyWithoutChatroomInput
 }
 
 input ChatRoomCreateWithoutMessagesInput {
-  company: CompanyCreateOneWithoutChatroomInput!
+  private: Boolean!
+  company: CompanyCreateOneWithoutChatroomInput
   participants: UserCreateManyWithoutChatroomInput
 }
 
 input ChatRoomCreateWithoutParticipantsInput {
-  company: CompanyCreateOneWithoutChatroomInput!
+  private: Boolean!
+  company: CompanyCreateOneWithoutChatroomInput
   messages: MessageCreateManyWithoutChatroomInput
 }
 
@@ -87,6 +92,8 @@ type ChatRoomEdge {
 enum ChatRoomOrderByInput {
   id_ASC
   id_DESC
+  private_ASC
+  private_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -95,6 +102,7 @@ enum ChatRoomOrderByInput {
 
 type ChatRoomPreviousValues {
   id: ID!
+  private: Boolean!
 }
 
 type ChatRoomSubscriptionPayload {
@@ -137,9 +145,14 @@ input ChatRoomSubscriptionWhereInput {
 }
 
 input ChatRoomUpdateInput {
-  company: CompanyUpdateOneRequiredWithoutChatroomInput
+  private: Boolean
+  company: CompanyUpdateOneWithoutChatroomInput
   messages: MessageUpdateManyWithoutChatroomInput
   participants: UserUpdateManyWithoutChatroomInput
+}
+
+input ChatRoomUpdateManyMutationInput {
+  private: Boolean
 }
 
 input ChatRoomUpdateOneRequiredWithoutMessagesInput {
@@ -168,17 +181,20 @@ input ChatRoomUpdateOneWithoutParticipantsInput {
 }
 
 input ChatRoomUpdateWithoutCompanyDataInput {
+  private: Boolean
   messages: MessageUpdateManyWithoutChatroomInput
   participants: UserUpdateManyWithoutChatroomInput
 }
 
 input ChatRoomUpdateWithoutMessagesDataInput {
-  company: CompanyUpdateOneRequiredWithoutChatroomInput
+  private: Boolean
+  company: CompanyUpdateOneWithoutChatroomInput
   participants: UserUpdateManyWithoutChatroomInput
 }
 
 input ChatRoomUpdateWithoutParticipantsDataInput {
-  company: CompanyUpdateOneRequiredWithoutChatroomInput
+  private: Boolean
+  company: CompanyUpdateOneWithoutChatroomInput
   messages: MessageUpdateManyWithoutChatroomInput
 }
 
@@ -246,6 +262,10 @@ input ChatRoomWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  private: Boolean
+
+  """All values that are not equal to given value."""
+  private_not: Boolean
   company: CompanyWhereInput
   messages_every: MessageWhereInput
   messages_some: MessageWhereInput
@@ -412,9 +432,11 @@ input CompanyUpdateManyMutationInput {
   logo: String
 }
 
-input CompanyUpdateOneRequiredWithoutChatroomInput {
+input CompanyUpdateOneWithoutChatroomInput {
   create: CompanyCreateWithoutChatroomInput
   connect: CompanyWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
   update: CompanyUpdateWithoutChatroomDataInput
   upsert: CompanyUpsertWithoutChatroomInput
 }
@@ -1011,6 +1033,7 @@ type Mutation {
   upsertMessage(where: MessageWhereUniqueInput!, create: MessageCreateInput!, update: MessageUpdateInput!): Message!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyCompanies(data: CompanyUpdateManyMutationInput!, where: CompanyWhereInput): BatchPayload!
+  updateManyChatRooms(data: ChatRoomUpdateManyMutationInput!, where: ChatRoomWhereInput): BatchPayload!
   updateManyMessages(data: MessageUpdateManyMutationInput!, where: MessageWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   deleteManyCompanies(where: CompanyWhereInput): BatchPayload!
@@ -1079,6 +1102,7 @@ type User implements Node {
   email: String!
   name: String!
   password: String!
+  language: String!
   owner_of: Company
   employee_of: Company
   chatroom: ChatRoom
@@ -1098,6 +1122,7 @@ input UserCreateInput {
   email: String!
   name: String!
   password: String!
+  language: String
   owner_of: CompanyCreateOneWithoutOwnerInput
   employee_of: CompanyCreateOneWithoutEmployeesInput
   chatroom: ChatRoomCreateOneWithoutParticipantsInput
@@ -1127,6 +1152,7 @@ input UserCreateWithoutChatroomInput {
   email: String!
   name: String!
   password: String!
+  language: String
   owner_of: CompanyCreateOneWithoutOwnerInput
   employee_of: CompanyCreateOneWithoutEmployeesInput
 }
@@ -1135,6 +1161,7 @@ input UserCreateWithoutEmployee_ofInput {
   email: String!
   name: String!
   password: String!
+  language: String
   owner_of: CompanyCreateOneWithoutOwnerInput
   chatroom: ChatRoomCreateOneWithoutParticipantsInput
 }
@@ -1143,6 +1170,7 @@ input UserCreateWithoutOwner_ofInput {
   email: String!
   name: String!
   password: String!
+  language: String
   employee_of: CompanyCreateOneWithoutEmployeesInput
   chatroom: ChatRoomCreateOneWithoutParticipantsInput
 }
@@ -1165,6 +1193,8 @@ enum UserOrderByInput {
   name_DESC
   password_ASC
   password_DESC
+  language_ASC
+  language_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1176,6 +1206,7 @@ type UserPreviousValues {
   email: String!
   name: String!
   password: String!
+  language: String!
 }
 
 input UserScalarWhereInput {
@@ -1347,6 +1378,46 @@ input UserScalarWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  language: String
+
+  """All values that are not equal to given value."""
+  language_not: String
+
+  """All values that are contained in given list."""
+  language_in: [String!]
+
+  """All values that are not contained in given list."""
+  language_not_in: [String!]
+
+  """All values less than the given value."""
+  language_lt: String
+
+  """All values less than or equal the given value."""
+  language_lte: String
+
+  """All values greater than the given value."""
+  language_gt: String
+
+  """All values greater than or equal the given value."""
+  language_gte: String
+
+  """All values containing the given string."""
+  language_contains: String
+
+  """All values not containing the given string."""
+  language_not_contains: String
+
+  """All values starting with the given string."""
+  language_starts_with: String
+
+  """All values not starting with the given string."""
+  language_not_starts_with: String
+
+  """All values ending with the given string."""
+  language_ends_with: String
+
+  """All values not ending with the given string."""
+  language_not_ends_with: String
 }
 
 type UserSubscriptionPayload {
@@ -1392,6 +1463,7 @@ input UserUpdateDataInput {
   email: String
   name: String
   password: String
+  language: String
   owner_of: CompanyUpdateOneWithoutOwnerInput
   employee_of: CompanyUpdateOneWithoutEmployeesInput
   chatroom: ChatRoomUpdateOneWithoutParticipantsInput
@@ -1401,6 +1473,7 @@ input UserUpdateInput {
   email: String
   name: String
   password: String
+  language: String
   owner_of: CompanyUpdateOneWithoutOwnerInput
   employee_of: CompanyUpdateOneWithoutEmployeesInput
   chatroom: ChatRoomUpdateOneWithoutParticipantsInput
@@ -1410,12 +1483,14 @@ input UserUpdateManyDataInput {
   email: String
   name: String
   password: String
+  language: String
 }
 
 input UserUpdateManyMutationInput {
   email: String
   name: String
   password: String
+  language: String
 }
 
 input UserUpdateManyWithoutChatroomInput {
@@ -1463,6 +1538,7 @@ input UserUpdateWithoutChatroomDataInput {
   email: String
   name: String
   password: String
+  language: String
   owner_of: CompanyUpdateOneWithoutOwnerInput
   employee_of: CompanyUpdateOneWithoutEmployeesInput
 }
@@ -1471,6 +1547,7 @@ input UserUpdateWithoutEmployee_ofDataInput {
   email: String
   name: String
   password: String
+  language: String
   owner_of: CompanyUpdateOneWithoutOwnerInput
   chatroom: ChatRoomUpdateOneWithoutParticipantsInput
 }
@@ -1479,6 +1556,7 @@ input UserUpdateWithoutOwner_ofDataInput {
   email: String
   name: String
   password: String
+  language: String
   employee_of: CompanyUpdateOneWithoutEmployeesInput
   chatroom: ChatRoomUpdateOneWithoutParticipantsInput
 }
@@ -1684,6 +1762,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  language: String
+
+  """All values that are not equal to given value."""
+  language_not: String
+
+  """All values that are contained in given list."""
+  language_in: [String!]
+
+  """All values that are not contained in given list."""
+  language_not_in: [String!]
+
+  """All values less than the given value."""
+  language_lt: String
+
+  """All values less than or equal the given value."""
+  language_lte: String
+
+  """All values greater than the given value."""
+  language_gt: String
+
+  """All values greater than or equal the given value."""
+  language_gte: String
+
+  """All values containing the given string."""
+  language_contains: String
+
+  """All values not containing the given string."""
+  language_not_contains: String
+
+  """All values starting with the given string."""
+  language_starts_with: String
+
+  """All values not starting with the given string."""
+  language_not_starts_with: String
+
+  """All values ending with the given string."""
+  language_ends_with: String
+
+  """All values not ending with the given string."""
+  language_not_ends_with: String
   owner_of: CompanyWhereInput
   employee_of: CompanyWhereInput
   chatroom: ChatRoomWhereInput
