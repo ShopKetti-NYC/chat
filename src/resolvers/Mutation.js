@@ -75,7 +75,7 @@ module.exports = {
     );
   },
   // Mutation for leaving the chatroom
-  leaveChatroom: async (parent, args, { prisma, request }, info) => {
+  leaveChatRoom: async (parent, args, { prisma, request }, info) => {
     const userId = getUserId(request);
     const data = {
       participants: {
