@@ -8,7 +8,7 @@ type Query {
   users: [User!]!
   companies: [Company!]!
   chatRooms: [ChatRoom!]!
-  chatRoom(companyId: ID!): ChatRoom!
+  chatRoom(chatroomId: ID!): ChatRoom!
 }
 
 type Mutation {

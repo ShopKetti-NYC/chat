@@ -51,7 +51,6 @@ module.exports = {
       },
       chatroom: {
         create: {
-          private: false,
           participants: {
             connect: {
               id: userId
