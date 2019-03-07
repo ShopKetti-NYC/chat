@@ -17,6 +17,7 @@ type Mutation {
   createCompany(name: String!, description: String!, logo: String!): Company!
   joinCompany(companyId: ID!): Company!
   joinChatRoom(chatroomId: ID!): ChatRoom!
+  leaveChatRoom(chatroomId: ID!): ChatRoom!
   createMessage(chatroomId: ID!, text: String!): Message!
 }
 

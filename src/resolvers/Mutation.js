@@ -51,11 +51,7 @@ module.exports = {
       },
       chatroom: {
         create: {
-          participants: {
-            connect: {
-              id: userId
-            }
-          }
+          private: false
         }
       }
     };
@@ -68,6 +64,22 @@ module.exports = {
     const data = {
       participants: {
         connect: {
+          id: userId
+        }
+      }
+    };
+
+    return prisma.mutation.updateChatRoom(
+      { where: { id: args.chatroomId }, data },
+      info
+    );
+  },
+  // Mutation for leaving the chatroom
+  leaveChatroom: async (parent, args, { prisma, request }, info) => {
+    const userId = getUserId(request);
+    const data = {
+      participants: {
+        disconnect: {
           id: userId
         }
       }
